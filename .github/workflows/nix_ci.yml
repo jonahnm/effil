@@ -35,7 +35,8 @@ jobs:
 
     - name: Configure CMake && build
       run: |
-        cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{matrix.build-type}} -DLUA_INCLUDE_DIR="${{github.workspace}}/lua-pkg/include"
+        wget https://github.com/leetal/ios-cmake/raw/master/ios.toolchain.cmake
+        cmake -B ${{github.workspace}}/build -DCMAKE_TOOLCHAIN_FILE=ios.toolchain.cmake -DPLATFORM=OS64 -DCMAKE_BUILD_TYPE=${{matrix.build-type}} -DLUA_INCLUDE_DIR="${{github.workspace}}/lua-pkg/include"
         cmake --build ${{github.workspace}}/build --config ${{matrix.build-type}}
 
     - name: Test
